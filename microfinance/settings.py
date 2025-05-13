@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 SHARED_APPS = [
     'django_tenants',
     'tenant',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.admin',
@@ -51,9 +52,9 @@ TENANT_APPS = [
     'api',
 ]
 
-INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
+INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
 
-TENANT_MODEL = "tenant.Microfinance"  
+TENANT_MODEL = "tenant.MicrofinanceTenant"  
 TENANT_DOMAIN_MODEL = "tenant.Domain"
 
 MIDDLEWARE = [
