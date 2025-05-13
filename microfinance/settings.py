@@ -29,20 +29,35 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
-
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'django_tenants',
+    'tenant',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.admin',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+TENANT_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.admin',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
-    'api'
+    'api',
 ]
 
+INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
+
+TENANT_MODEL = "tenant.Microfinance"  
+TENANT_DOMAIN_MODEL = "tenant.Domain"
+
 MIDDLEWARE = [
+    'django_tenants.middleware.main.TenantMainMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -78,10 +93,18 @@ WSGI_APPLICATION = 'microfinance.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / variables.DB_NAME,
+        'ENGINE': 'django_tenants.postgresql_backend',
+        'NAME': variables.DB_NAME,
+        'USER': variables.DB_USER,
+        'PASSWORD': variables.DB_PASSWORD,
+        'HOST': variables.DB_HOST,
+        'PORT': variables.DB_PORT,
     }
 }
+
+DATABASE_ROUTERS = (
+    'django_tenants.routers.TenantSyncRouter',
+)
 
 
 # Password validation
