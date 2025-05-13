@@ -53,7 +53,7 @@ TENANT_APPS = [
 
 INSTALLED_APPS = list(set(SHARED_APPS + TENANT_APPS))
 
-TENANT_MODEL = "tenant.Microfinance"  
+TENANT_MODEL = "tenant.MicrofinanceTenant"  
 TENANT_DOMAIN_MODEL = "tenant.Domain"
 
 MIDDLEWARE = [
