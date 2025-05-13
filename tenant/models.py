@@ -6,8 +6,7 @@ class MicrofinanceTenant(TenantMixin):
     adresse = models.CharField(max_length=255, null=True, blank=True)
     nif = models.CharField(max_length=64, unique=True)
 
-    auto_create_schema = True  # important pour créer le schéma automatiquement
-
+    auto_create_schema = True
     def __str__(self):
         return self.nom
     

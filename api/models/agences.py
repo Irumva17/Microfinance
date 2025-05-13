@@ -26,7 +26,6 @@ class Agence(models.Model):
     nom = models.CharField(max_length=32)
     adresse = models.CharField(max_length=64, null=True, blank=True)
     details = models.CharField(max_length=256, null=True, blank=True)
-    microfinance = models.ForeignKey(Microfinance, on_delete=models.PROTECT)
     balance = models.FloatField(editable=False, default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, editable=False, on_delete=models.PROTECT)
@@ -34,7 +33,7 @@ class Agence(models.Model):
     retraits = models.FloatField(default=0, editable=False)  # somme totale des retraits de la microfinance
 
     def __str__(self) -> str:
-        return f'{self.microfinance} agence {self.nom}'
+        return f'agence {self.nom}'
 
     class Meta:
         constraints = [
